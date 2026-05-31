@@ -7,20 +7,32 @@ class EducatorDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Educator Dashboard')),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              _buildSummaryHeader(),
-              const SizedBox(height: 20),
-              _buildQuickActions(),
-              const SizedBox(height: 20),
-              const Text('Active Group Management', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              _buildGroupList(),
-            ],
+      body: CustomScrollView(
+        slivers: [
+          SliverPadding(
+            padding: const EdgeInsets.all(16.0),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                _buildSummaryHeader(),
+                const SizedBox(height: 20),
+                _buildQuickActions(),
+                const SizedBox(height: 20),
+                const Text(
+                  'Active Group Management',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+              ]),
+            ),
           ),
-        ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            sliver: _buildGroupList(),
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 16),
+          ),
+        ],
       ),
     );
   }
@@ -61,16 +73,19 @@ class EducatorDashboard extends StatelessWidget {
   }
 
   Widget _buildGroupList() {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+    // Optimized: Replaced ListView.builder(shrinkWrap: true) with SliverList.builder
+    // to enable efficient lazy loading of children cards.
+    return SliverList.builder(
       itemCount: 5,
       itemBuilder: (context, index) {
         return ListTile(
           leading: const CircleAvatar(backgroundColor: Colors.blueGrey),
-          title: Text('Child $index'),
+          title: Text('Child '),
           subtitle: const Text('Allergies: None'),
-          trailing: IconButton(icon: const Icon(Icons.check_circle_outline), onPressed: () {}),
+          trailing: IconButton(
+            icon: const Icon(Icons.check_circle_outline),
+            onPressed: () {},
+          ),
         );
       },
     );

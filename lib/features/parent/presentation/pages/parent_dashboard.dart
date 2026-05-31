@@ -7,23 +7,34 @@ class ParentDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('My Child - Daily Activity')),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildChildSelector(),
-              const SizedBox(height: 20),
-              const Text('Today\'s Journal', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              _buildActivityTimeline(),
-              const SizedBox(height: 20),
-              _buildTransportStatus(),
-              const SizedBox(height: 20),
-              _buildQuickLinks(),
-            ],
+      body: CustomScrollView(
+        slivers: [
+          SliverPadding(
+            padding: const EdgeInsets.all(16.0),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                _buildChildSelector(),
+                const SizedBox(height: 20),
+                const Text(
+                  'Today\'s Journal',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                _buildActivityTimeline(),
+                const SizedBox(height: 20),
+                _buildTransportStatus(),
+                const SizedBox(height: 20),
+              ]),
+            ),
           ),
-        ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            sliver: _buildQuickLinks(),
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 80), // Space for bottom nav
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
@@ -51,7 +62,8 @@ class ParentDashboard extends StatelessWidget {
       child: Column(
         children: [
           _buildActivityItem('08:30', 'Arrived', Icons.check_circle, Colors.green),
-          _buildActivityItem('10:00', 'Morning Snack (Apple & Milk)', Icons.restaurant, Colors.orange),
+          _buildActivityItem(
+              '10:00', 'Morning Snack (Apple & Milk)', Icons.restaurant, Colors.orange),
           _buildActivityItem('12:30', 'Nap Time', Icons.hotel, Colors.blue),
         ],
       ),
@@ -69,12 +81,19 @@ class ParentDashboard extends StatelessWidget {
   Widget _buildTransportStatus() {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(color: Colors.blue.shade50, borderRadius: BorderRadius.circular(8)),
+      decoration: BoxDecoration(
+          color: Colors.blue.shade50, borderRadius: BorderRadius.circular(8)),
       child: const Row(
         children: [
           Icon(Icons.directions_bus, color: Colors.blue),
           SizedBox(width: 12),
-          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text('Bus is 5 mins away', style: TextStyle(fontWeight: FontWeight.bold)), Text('Next stop: Elm Street')])),
+          Expanded(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                Text('Bus is 5 mins away', style: TextStyle(fontWeight: FontWeight.bold)),
+                Text('Next stop: Elm Street')
+              ])),
           Icon(Icons.map, color: Colors.blue),
         ],
       ),
@@ -82,21 +101,32 @@ class ParentDashboard extends StatelessWidget {
   }
 
   Widget _buildQuickLinks() {
-    return GridView.count(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: 2,
-      childAspectRatio: 3,
-      children: [
+    // Optimized: Replaced GridView.count(shrinkWrap: true) with SliverGrid
+    // to improve scrolling performance by lazy-loading grid items.
+    return SliverGrid(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 3,
+        mainAxisSpacing: 8,
+        crossAxisSpacing: 8,
+      ),
+      delegate: SliverChildListDelegate([
         _buildLinkTile(Icons.description, 'Invoices'),
         _buildLinkTile(Icons.medical_services, 'Health'),
         _buildLinkTile(Icons.assignment, 'Contracts'),
         _buildLinkTile(Icons.family_restroom, 'Family Space'),
-      ],
+      ]),
     );
   }
 
   Widget _buildLinkTile(IconData icon, String label) {
-    return ListTile(leading: Icon(icon, size: 20), title: Text(label, style: const TextStyle(fontSize: 12)), onTap: () {});
+    return Material(
+      color: Colors.transparent,
+      child: ListTile(
+        leading: Icon(icon, size: 20),
+        title: Text(label, style: const TextStyle(fontSize: 12)),
+        onTap: () {},
+      ),
+    );
   }
 }
