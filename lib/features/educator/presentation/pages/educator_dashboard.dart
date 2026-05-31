@@ -16,7 +16,10 @@ class EducatorDashboard extends StatelessWidget {
               const SizedBox(height: 20),
               _buildQuickActions(),
               const SizedBox(height: 20),
-              const Text('Active Group Management', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Text(
+                'Active Group Management',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
               _buildGroupList(),
             ],
           ),
@@ -70,7 +73,10 @@ class EducatorDashboard extends StatelessWidget {
           leading: const CircleAvatar(backgroundColor: Colors.blueGrey),
           title: Text('Child $index'),
           subtitle: const Text('Allergies: None'),
-          trailing: IconButton(icon: const Icon(Icons.check_circle_outline), onPressed: () {}),
+          trailing: IconButton(
+            icon: const Icon(Icons.check_circle_outline),
+            onPressed: () {},
+          ),
         );
       },
     );

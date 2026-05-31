@@ -12,13 +12,21 @@ class DriverDashboard extends StatelessWidget {
           Container(
             height: 200,
             color: Colors.grey.shade200,
-            child: const Center(child: Text('GPS / Map View Placeholder', style: TextStyle(color: Colors.grey))),
+            child: const Center(
+              child: Text(
+                'GPS / Map View Placeholder',
+                style: TextStyle(color: Colors.grey),
+              ),
+            ),
           ),
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(16),
               children: [
-                const Text('Current Trip: Route A', style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text(
+                  'Current Trip: Route A',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 _buildChildStop('Alice Smith', 'Scheduled: 08:15', true),
                 _buildChildStop('Bob Brown', 'Scheduled: 08:25', false),
               ],
@@ -29,10 +37,16 @@ class DriverDashboard extends StatelessWidget {
             child: ElevatedButton.icon(
               onPressed: () {},
               icon: const Icon(Icons.sos, color: Colors.white),
-              label: const Text('SOS BUTTON', style: TextStyle(color: Colors.white)),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.red, minimumSize: const Size(double.infinity, 50)),
+              label: const Text(
+                'SOS BUTTON',
+                style: TextStyle(color: Colors.white),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                minimumSize: const Size(double.infinity, 50),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );
