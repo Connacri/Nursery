@@ -53,12 +53,26 @@ class _LoginPageState extends State<LoginPage> {
                     labelText: 'Email',
                     prefixIcon: Icon(Icons.email_outlined),
                     border: OutlineInputBorder(),
+                    counterText: '', // Hide counter for security/cleanliness
                   ),
+                  maxLength: 255,
                   keyboardType: TextInputType.emailAddress,
                   autofillHints: const [AutofillHints.email],
-                  validator: (value) => value != null && value.contains('@')
-                      ? null
-                      : 'Enter a valid email',
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Email is required';
+                    }
+                    if (value.length > 255) {
+                      return 'Email too long';
+                    }
+                    // Robust email validation regex
+                    final emailRegex = RegExp(
+                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                    if (!emailRegex.hasMatch(value)) {
+                      return 'Enter a valid email';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
@@ -67,6 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                     labelText: 'Password',
                     prefixIcon: const Icon(Icons.lock_outline),
                     border: const OutlineInputBorder(),
+                    counterText: '', // Hide counter for security/cleanliness
                     suffixIcon: IconButton(
                       icon: Icon(
                         _obscurePassword
@@ -80,11 +95,21 @@ class _LoginPageState extends State<LoginPage> {
                           : 'Hide password',
                     ),
                   ),
+                  maxLength: 128,
                   obscureText: _obscurePassword,
                   autofillHints: const [AutofillHints.password],
-                  validator: (value) => value != null && value.length >= 6
-                      ? null
-                      : 'Password too short',
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Password is required';
+                    }
+                    if (value.length < 6) {
+                      return 'Password too short';
+                    }
+                    if (value.length > 128) {
+                      return 'Password too long';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 24),
                 ElevatedButton(

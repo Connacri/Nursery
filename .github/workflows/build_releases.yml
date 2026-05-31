@@ -6,7 +6,8 @@ permissions:
 on:
   push:
     branches:
-      - '**'
+      - 'master'
+      - 'main'
   workflow_dispatch:
 
 jobs:
@@ -65,26 +66,42 @@ jobs:
       - run: flutter config --enable-windows-desktop
       - run: flutter pub get
       - run: flutter build windows --release
-      - name: Upload Windows EXE
-        uses: actions/upload-artifact@v4
-        with:
-          name: nursery-windows-exe
-          path: build/windows/runner/Release/
 
-  build-ios:
-    needs: version-bump
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref_name }}
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-      - run: flutter pub get
-      - run: flutter build ios --release --no-codesign
-      - name: Upload iOS Build
+      - name: Install Inno Setup
+        run: choco install innosetup
+
+      - name: Build Installer with Inno Setup
+        run: iscc windows/nursery_installer.iss
+
+      - name: Upload Windows Setup
         uses: actions/upload-artifact@v4
         with:
-          name: nursery-ios-app
-          path: build/ios/iphoneos/
+          name: nursery-windows-setup
+          path: build/windows/installer/nursery-windows-setup.exe
+
+  create-release:
+    needs: [build-android, build-windows, version-bump]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download APK
+        uses: actions/download-artifact@v4
+        with:
+          name: nursery-android-apk
+          path: artifacts/
+
+      - name: Download Windows Setup
+        uses: actions/download-artifact@v4
+        with:
+          name: nursery-windows-setup
+          path: artifacts/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ needs.version-bump.outputs.new_version }}
+          name: Release v${{ needs.version-bump.outputs.new_version }}
+          files: |
+            artifacts/app-release.apk
+            artifacts/nursery-windows-setup.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
