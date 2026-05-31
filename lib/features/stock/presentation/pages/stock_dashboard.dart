@@ -16,9 +16,24 @@ class StockDashboard extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  _buildInventoryItem('Diapers (Size 3)', '120 units', 'Low Stock', Colors.orange),
-                  _buildInventoryItem('Milk Powder', '45 cans', 'Optimal', Colors.green),
-                  _buildInventoryItem('Hand Sanitizer', '2 bottles', 'CRITICAL', Colors.red),
+                  _buildInventoryItem(
+                    'Diapers (Size 3)',
+                    '120 units',
+                    'Low Stock',
+                    Colors.orange,
+                  ),
+                  _buildInventoryItem(
+                    'Milk Powder',
+                    '45 cans',
+                    'Optimal',
+                    Colors.green,
+                  ),
+                  _buildInventoryItem(
+                    'Hand Sanitizer',
+                    '2 bottles',
+                    'CRITICAL',
+                    Colors.red,
+                  ),
                 ],
               ),
             ),
@@ -44,15 +59,26 @@ class StockDashboard extends StatelessWidget {
     );
   }
 
-  Widget _buildInventoryItem(String name, String qty, String status, Color statusColor) {
+  Widget _buildInventoryItem(
+    String name,
+    String qty,
+    String status,
+    Color statusColor,
+  ) {
     return Card(
       child: ListTile(
         title: Text(name),
         subtitle: Text('Quantity: $qty'),
         trailing: Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          decoration: BoxDecoration(color: statusColor, borderRadius: BorderRadius.circular(4)),
-          child: Text(status, style: const TextStyle(color: Colors.white, fontSize: 10)),
+          decoration: BoxDecoration(
+            color: statusColor,
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Text(
+            status,
+            style: const TextStyle(color: Colors.white, fontSize: 10),
+          ),
         ),
       ),
     );

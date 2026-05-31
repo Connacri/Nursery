@@ -13,11 +13,17 @@ class CrecheDashboard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Operational Overview', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const Text(
+                'Operational Overview',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 16),
               _buildActionGrid(context),
               const SizedBox(height: 24),
-              const Text('Financial Summary', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const Text(
+                'Financial Summary',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
               _buildFinancialSummary(),
             ],
           ),
@@ -66,12 +72,18 @@ class CrecheDashboard extends StatelessWidget {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text('Revenue'), Text('€4,500', style: TextStyle(color: Colors.green))],
+              children: [
+                Text('Revenue'),
+                Text('€4,500', style: TextStyle(color: Colors.green)),
+              ],
             ),
             Divider(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text('Expenses'), Text('€2,100', style: TextStyle(color: Colors.red))],
+              children: [
+                Text('Expenses'),
+                Text('€2,100', style: TextStyle(color: Colors.red)),
+              ],
             ),
           ],
         ),

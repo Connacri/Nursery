@@ -23,11 +23,26 @@ class MedicalDashboard extends StatelessWidget {
   Widget _buildAlertsSection() {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(color: Colors.red.shade50, borderRadius: BorderRadius.circular(8)),
+      decoration: BoxDecoration(
+        color: Colors.red.shade50,
+        borderRadius: BorderRadius.circular(8),
+      ),
       child: const Column(
         children: [
-          Row(children: [Icon(Icons.warning, color: Colors.red), SizedBox(width: 8), Text('Health Alerts', style: TextStyle(fontWeight: FontWeight.bold))]),
-          ListTile(title: Text('Administer Insulin - Marc (10:00)'), subtitle: Text('Room 3A')),
+          Row(
+            children: [
+              Icon(Icons.warning, color: Colors.red),
+              SizedBox(width: 8),
+              Text(
+                'Health Alerts',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          ListTile(
+            title: Text('Administer Insulin - Marc (10:00)'),
+            subtitle: Text('Room 3A'),
+          ),
         ],
       ),
     );

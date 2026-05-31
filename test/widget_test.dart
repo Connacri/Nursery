@@ -7,6 +7,6 @@ void main() {
     await tester.pumpWidget(const MyApp());
 
     // Verify that the login page or initial text is present.
-    expect(find.text('Welcome to NurseryOS Enterprise+'), findsOneWidget);
+    expect(find.text('Welcome to NurseryOS'), findsOneWidget);
   });
 }

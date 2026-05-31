@@ -14,6 +14,7 @@ class TenantManagementPage extends StatelessWidget {
             title: Text('Tenant $index'),
             subtitle: const Text('Plan: Enterprise'),
             trailing: PopupMenuButton(
+              tooltip: 'More options',
               itemBuilder: (context) => [
                 const PopupMenuItem(value: 'suspend', child: Text('Suspend')),
                 const PopupMenuItem(value: 'delete', child: Text('Delete')),
@@ -25,6 +26,7 @@ class TenantManagementPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
+        tooltip: 'Add new tenant',
         child: const Icon(Icons.add),
       ),
     );

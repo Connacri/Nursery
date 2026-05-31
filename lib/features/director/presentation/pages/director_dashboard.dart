@@ -34,15 +34,28 @@ class DirectorDashboard extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text(
+              title,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
             const Spacer(),
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Column(children: [Text('Occupation'), Text('85%', style: TextStyle(color: Colors.blue))]),
-                Column(children: [Text('Staff Presence'), Text('92%', style: TextStyle(color: Colors.green))]),
+                Column(
+                  children: [
+                    Text('Occupation'),
+                    Text('85%', style: TextStyle(color: Colors.blue)),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Text('Staff Presence'),
+                    Text('92%', style: TextStyle(color: Colors.green)),
+                  ],
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),
@@ -55,7 +68,10 @@ class DirectorDashboard extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          child: Text(
+            title,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
         ),
         Card(child: Column(children: children)),
       ],

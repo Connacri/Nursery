@@ -15,7 +15,10 @@ class ParentDashboard extends StatelessWidget {
             children: [
               _buildChildSelector(),
               const SizedBox(height: 20),
-              const Text('Today\'s Journal', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Text(
+                'Today\'s Journal',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
               _buildActivityTimeline(),
               const SizedBox(height: 20),
               _buildTransportStatus(),
@@ -29,7 +32,10 @@ class ParentDashboard extends StatelessWidget {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Daily'),
           BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Messages'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Market'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: 'Market',
+          ),
         ],
       ),
     );
@@ -50,15 +56,30 @@ class ParentDashboard extends StatelessWidget {
     return Card(
       child: Column(
         children: [
-          _buildActivityItem('08:30', 'Arrived', Icons.check_circle, Colors.green),
-          _buildActivityItem('10:00', 'Morning Snack (Apple & Milk)', Icons.restaurant, Colors.orange),
+          _buildActivityItem(
+            '08:30',
+            'Arrived',
+            Icons.check_circle,
+            Colors.green,
+          ),
+          _buildActivityItem(
+            '10:00',
+            'Morning Snack (Apple & Milk)',
+            Icons.restaurant,
+            Colors.orange,
+          ),
           _buildActivityItem('12:30', 'Nap Time', Icons.hotel, Colors.blue),
         ],
       ),
     );
   }
 
-  Widget _buildActivityItem(String time, String desc, IconData icon, Color color) {
+  Widget _buildActivityItem(
+    String time,
+    String desc,
+    IconData icon,
+    Color color,
+  ) {
     return ListTile(
       leading: Text(time, style: const TextStyle(fontWeight: FontWeight.bold)),
       title: Text(desc),
@@ -69,12 +90,26 @@ class ParentDashboard extends StatelessWidget {
   Widget _buildTransportStatus() {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(color: Colors.blue.shade50, borderRadius: BorderRadius.circular(8)),
+      decoration: BoxDecoration(
+        color: Colors.blue.shade50,
+        borderRadius: BorderRadius.circular(8),
+      ),
       child: const Row(
         children: [
           Icon(Icons.directions_bus, color: Colors.blue),
           SizedBox(width: 12),
-          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text('Bus is 5 mins away', style: TextStyle(fontWeight: FontWeight.bold)), Text('Next stop: Elm Street')])),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Bus is 5 mins away',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text('Next stop: Elm Street'),
+              ],
+            ),
+          ),
           Icon(Icons.map, color: Colors.blue),
         ],
       ),
@@ -97,6 +132,10 @@ class ParentDashboard extends StatelessWidget {
   }
 
   Widget _buildLinkTile(IconData icon, String label) {
-    return ListTile(leading: Icon(icon, size: 20), title: Text(label, style: const TextStyle(fontSize: 12)), onTap: () {});
+    return ListTile(
+      leading: Icon(icon, size: 20),
+      title: Text(label, style: const TextStyle(fontSize: 12)),
+      onTap: () {},
+    );
   }
 }
