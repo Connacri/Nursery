@@ -1,0 +1,90 @@
+name: Build and Release NurseryOS
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  version-bump:
+    runs-on: ubuntu-latest
+    outputs:
+      new_version: ${{ steps.bump.outputs.version }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Run Version Increment
+        id: bump
+        run: |
+          chmod +x increment_version.sh
+          ./increment_version.sh
+          VERSION=$(grep "version: " pubspec.yaml | cut -d ' ' -f 2)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add pubspec.yaml
+          git commit -m "chore: bump version to $VERSION [skip ci]" || echo "No changes to commit"
+          # git push will be added in a way that doesn't block
+          git push
+
+  build-android:
+    needs: version-bump
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: master
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - run: flutter pub get
+      - run: flutter build apk --release
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: nursery-android-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+  build-windows:
+    needs: version-bump
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: master
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - run: flutter config --enable-windows-desktop
+      - run: flutter pub get
+      - run: flutter build windows --release
+      - name: Upload Windows EXE
+        uses: actions/upload-artifact@v3
+        with:
+          name: nursery-windows-exe
+          path: build/windows/runner/Release/
+
+  build-ios:
+    needs: version-bump
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: master
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - run: flutter pub get
+      - run: flutter build ios --release --no-codesign
+      - name: Upload iOS Build
+        uses: actions/upload-artifact@v3
+        with:
+          name: nursery-ios-app
+          path: build/ios/iphoneos/
