@@ -40,7 +40,12 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.child_care, size: 64, color: Colors.blue),
+                const Icon(
+                  Icons.child_care,
+                  size: 64,
+                  color: Colors.blue,
+                  semanticLabel: "NurseryOS Logo",
+                ),
                 const SizedBox(height: 16),
                 const Text(
                   'Welcome to NurseryOS',
@@ -49,6 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 32),
                 TextFormField(
                   controller: _emailController,
+                  textInputAction: TextInputAction.next,
                   decoration: const InputDecoration(
                     labelText: 'Email',
                     prefixIcon: Icon(Icons.email_outlined),
@@ -63,6 +69,8 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: _passwordController,
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (_) => _handleLogin(),
                   decoration: InputDecoration(
                     labelText: 'Password',
                     prefixIcon: const Icon(Icons.lock_outline),

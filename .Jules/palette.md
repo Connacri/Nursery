@@ -11,3 +11,7 @@
 ## 2024-05-22 - [Build Configuration]
 **Learning:** Modern Firebase plugins (Auth/Core) often require iOS 15.0+. Keeping the deployment target up to date is crucial for build stability.
 **Action:** Always check IPHONEOS_DEPLOYMENT_TARGET when adding or updating Firebase dependencies.
+
+## 2026-05-31 - [Keyboard Flow & Accessibility]
+**Learning:** In Flutter, 'invisible' UX improvements like TextInputAction and semanticLabel significantly improve the perceived quality and inclusiveness of the app without changing the visual design.
+**Action:** Consistently implement keyboard navigation (next/done) and semantic labels for decorative icons that serve as branding.
