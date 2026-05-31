@@ -31,19 +31,33 @@ class SuperAdminDashboard extends StatelessWidget {
         ),
       ),
       body: GridView.count(
-        crossAxisCount: MediaQuery.of(context).size.width > 600 ? 4 : 2,
+        crossAxisCount: MediaQuery.sizeOf(context).width > 600 ? 4 : 2,
         padding: const EdgeInsets.all(16),
-        children: [
-          _buildStatCard('Active Tenants', '24', Colors.blue),
-          _buildStatCard('Live Users', '156', Colors.green),
-          _buildStatCard('MRR', '€12,400', Colors.orange),
-          _buildStatCard('API Health', '99.9%', Colors.purple),
+        children: const [
+          StatCard(title: 'Active Tenants', value: '24', color: Colors.blue),
+          StatCard(title: 'Live Users', value: '156', color: Colors.green),
+          StatCard(title: 'MRR', value: '€12,400', color: Colors.orange),
+          StatCard(title: 'API Health', value: '99.9%', color: Colors.purple),
         ],
       ),
     );
   }
+}
 
-  Widget _buildStatCard(String title, String value, Color color) {
+class StatCard extends StatelessWidget {
+  final String title;
+  final String value;
+  final Color color;
+
+  const StatCard({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return _HoverCard(
       color: color,
       child: Column(
@@ -69,7 +83,7 @@ class _HoverCard extends StatefulWidget {
   final Widget child;
   final Color color;
 
-  const _HoverCard({required this.child, required this.color});
+  const _HoverCard({super.key, required this.child, required this.color});
 
   @override
   State<_HoverCard> createState() => _HoverCardState();
@@ -83,14 +97,16 @@ class _HoverCardState extends State<_HoverCard> {
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
-      child: AnimatedScale(
-        scale: _isHovered ? 1.05 : 1.0,
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeInOut,
-        child: Card(
-          elevation: _isHovered ? 8 : 2,
-          color: widget.color.withAlpha(25),
-          child: Center(child: widget.child),
+      child: RepaintBoundary(
+        child: AnimatedScale(
+          scale: _isHovered ? 1.05 : 1.0,
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+          child: Card(
+            elevation: _isHovered ? 8 : 2,
+            color: widget.color.withAlpha(25),
+            child: Center(child: widget.child),
+          ),
         ),
       ),
     );
